@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <script>
+        let arr = [8, 3, 4, 1, 5, 1, 7];
+        let arr2 = [8, 3, 1, 12, 3, 4, 1, 5, 1, 7];
+        let arr1 = [8, 311, 3, 4, 4, 1, 5, 9, 1, 7];
+        let arr3 = [8, 3, 1, 12, 123, 3, 4, 1, 5, 1, 7];
+        let arr4 = [8, 3, 2, 12, 3, 5, 65, 4, 3, 8, 5, 1, 7];
+
+        let swap = (arr, a, b) => {
+            let temp = arr[a];
+            arr[a] = arr[b];
+            arr[b] = temp;
+        }
+
+        let quickSort = (arr, begin, end) => {
+            if (begin >= end - 1) return
+            let left = begin;
+            let right = end;
+            do {
+                do left++; while (left < right && arr[left] < arr[begin]);
+                do right--; while (left < right && arr[right] > arr[begin]);
+                if (left < right) swap(arr, left, right);
+            } while (left < right);
+            let swapPoint = left == right ? right - 1 : right;
+            swap(arr, begin, swapPoint);
+            quickSort(arr, begin, swapPoint);
+            quickSort(arr, swapPoint + 1, end)
+        }
+        //左闭右开
+        console.log(quickSort(arr4,0,arr4.length));
+
+    </script>
+</body>
+
+</html>
+
