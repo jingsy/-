@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        <!-- <div id="app">
+            <input type="text" :value="content" @input="inputHandle">
+            <span>{{ content }}</span>
+        </div> -->
+
+        <!-- v-model 实现双向数据绑定 实质就是一个value+input语法糖 -->
+
+        <div id="app">
+            <input type="text" v-model="content">
+            <span>{{ content }}</span>
+        
+
+        <!-- textarea 也可以用v-model实现双向数据绑定 -->
+        
+        <!-- input checkbox 实现双向数据绑定 -->
+        <!-- <input type="checkbox" v-model="checked"> {{checked}} -->
+
+        <!-- <label for="cg">成哥</label>
+        <input type="checkbox" v-model="checked" id="cg" value="代汉"> {{checked}} -->
+
+        <!-- 🌟vue实现 数据双向绑定 主要是：采用数据劫持结合发布者-订阅者模式的方式，
+            通过Object.defineProperty（）来劫持各个属性的setter，getter，在数据变动时发布消息给订阅者，
+            触发相应监听回调。当把一个普通 Javascript 对象传给 Vue 实例来作为它的 data 选项时，Vue 将遍历它的属性，
+            用 Object.defineProperty 将它们转为 getter/setter。用户看不到 getter/setter，
+            但是在内部它们让 Vue 追踪依赖，在属性被访问和修改时通知变化。
+
+            vue的数据双向绑定 将MVVM作为数据绑定的入口，整合Observer，Compile和Watcher三者，
+            通过Observer来监听自己的model的数据变化，通过Compile来解析编译模板指令（vue中是用来解析 {{}}），
+            最终利用watcher搭起observer和Compile之间的通信桥梁，
+            达到数据变化 —>视图更新；视图交互变化（input）—>数据model变更双向绑定效果。 -->
+        
+
+            <!-- ⬆️Compile指令解析器，它的作用对每个元素节点的指令进行解析，替换模板数据，
+                并绑定对应的更新函数，初始化相应的订阅。
+                ⬆️Watcher 订阅者，作为连接 Observer 和 Compile 的桥梁，
+                能够订阅并收到每个属性变动的通知，执行指令绑定的相应回调函数。
+                ⬆️Dep 消息订阅器，内部维护了一个数组，用来收集订阅者（Watcher），
+                数据变动触发notify 函数，再调用订阅者的 update 方法。 -->
+        </div>
+        
+
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    content:'daihan',
+                    // checked:true,
+                    checked:[]
+                },
+                // methods: {
+                //     inputHandle(e){
+                //         // console.log(e.target.value);
+                //         this.content=e.target.value;
+                //     }
+                // },
+            })
+    
+            
+        </script>
+</body>
+</html>

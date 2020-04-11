@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <div></div> -->
+        <!-- <my-content :msg="msg" :content="content"></my-content> -->
+        <my-content></my-content>
+
+    </div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+        var vm = new Vue({
+
+            el: '#app',
+            //如果不写data，写provide传家宝,但是不推荐用
+            // provide: {
+            //     msg: 'helloworld',
+            //     content: '这是cotent'
+            // },
+            data: {
+                msg: 'helloworld',
+                content: '这是cotent'
+            },
+            methods: {
+
+            },
+            components: {
+                myContent: {
+                    //注入传家宝
+                    inject:['msg'],
+                    // created() {
+                    //     console.log(this.$parent);//直接拿到父实例
+                    //     this.msg = this.$parent.msg;
+                    //     //就不用props了
+                    // },
+
+                    // inheritAttrs:false,
+                    // props:['msg'],
+                    template: `<div> 儿子： {{  }}
+                        <my-p></my-p>
+                        </div>`,
+                    components: {
+
+                        myP: {
+                            inject:['content'],
+                            // created() {
+                            //     console.log(this.$parent);//直接拿到父实例
+                            //     this.content = this.$parent.$parent.content;
+                            //     //就不用props了
+                            // },
+                            // props:['content'],
+                            template: `<p>孙子：{{content}}</p>`,
+                        }
+                    }
+                }
+            }
+        })
+
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .red{
+            background-color: red;
+        }
+        .blue{
+            background-color: blue;
+        }
+        .yellow{
+            background-color: yellow;
+        }
+        div#test{
+            width: 100px;
+            height: 100px;
+            /* background-color: red; */
+        }
+
+    </style>
+    
+</head>
+<body>
+    <!-- 1. v-bind:绑定属性 
+        v-bind:==> : 简写为 ：
+
+        绑定class: 绑定一个以上要用数组, 两种绑定方式 数组和对象
+
+        绑定style: 绑定对象{} 需要用布尔值进行控制的时候 就用对象 多个样式就用数组
+    -->
+    <!-- 
+        2. v-on 监听指令 简写@
+    如 v-on:click
+     -->
+
+     <!-- -------------------------------------------------------- -->
+     
+     <!-- 1.一的测试例子 -->
+ <div id="app">    
+        <!-- <img v-bind:src="imgUrl" alt="" :class="[redClass,blueClass]"> -->
+
+        <!-- 用布尔值控制是否绑定 -->
+        <!-- <img v-bind:src="imgUrl" alt="" :class="{yellow:flag,green:flag}"> -->
+
+        <!-- <div :style="divStyle"></div> -->
+        <!-- 绑定多个样式 -->
+        <!-- <div :style="[divStyle,divStyle1]">12121</!--> 
+    
+
+    <!-- -------------------------------------------------------- -->
+
+    <!-- 2. 二的测试例子 -->
+
+    <button @click="change('red')">红色</button>
+    <button @click="change('blue')">蓝色</button>
+    <button @click="change('yellow')">黄色</button>
+    
+    <div :class="color" id="test"></div>
+
+</div>
+
+   
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+<script>
+
+const vm = new Vue({
+            el:'#app',
+            data:{
+                imgUrl:'https://www.w3schools.com/w3css/img_lights.jpg',
+                redClass:'red',
+                blueClass: 'blue',
+                flag:true,
+                color:'red',
+                divStyle:{width:'100px',height:'100px',backgroundColor:'red'},
+                divStyle1:{backgroundColor:'#000'},
+                // data属性名不能跟method里同名
+                //data里的this是window methods的this是vue实例
+            },
+            methods: {
+                change(color){
+                    console.log(color);
+                    this.color=color;
+                },
+            },
+        })
+</script>
+</html>

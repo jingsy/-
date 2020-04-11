@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        
+
+        <div id="app">
+       
+        
+        </div>
+    
+
+       
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+            //  vue的生命周期函数
+           
+            var vm = new Vue({
+                el: '#app',
+                //过一遍流程
+                data:{
+                    name:'a'
+                },
+                beforeCreate() {
+                    //还不能获取data
+                    console.log(this);
+                },
+                created() {
+                    //可以拿到data了
+                    //可以调用ajax
+                    console.log(this.$data);
+                },
+                beforeMount() {
+                    //挂载前
+                    console.log(this.$el)//打印的是写在代码里的样子
+                },
+                mounted() {
+                    //可以调用ajax
+                    //挂载完毕 
+                    //el 变了， 显示加工后的样子
+                },
+                beforeUpdate() {
+                    //更改值
+                },
+                updated() {
+                    //更改完毕
+                },
+                beforeDestroy() {
+                    //执行完毕 销毁
+                },
+                destroyed() {
+                    //销毁完毕
+                },
+                
+            })
+    
+        </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+        {{ person ()}}
+        <!-- {{ msg}} -->
+
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+    
+        const vm = new Vue({
+            el: '#app',
+            data:{
+                msg:'hi',
+                name:'shanshan',
+                age:18,
+                // person:`name : ${this.age}`
+                // person:''
+            },
+            methods:{
+                person(){
+                    console.log('method');
+                    
+                    return  `age : ${this.age} name:${this.name}`
+                },
+                
+            },
+            computed: {
+                // person(){
+                //     console.log('method-computed');
+                //     return  `age : ${this.age} name:${this.name}`
+                // }
+
+                // person:{
+                //     get(){
+                //         return  `age : ${this.age} name:${this.name}`
+                //     },
+                //     set(val){
+                //         console.log(val);
+                //     }
+                // }
+            },
+            //计算属性，相当于缓存，
+
+            watch:{
+                //第一次渲染页面不执行 侦听器的函数
+                //谁改变就执行哪个函数
+                // name(newVal){
+                //     this.person = `age : ${this.age} name:${this.name}`
+                //     // console.log('name');
+                //     // console.log(this);
+                    
+                    
+                // },
+                // age(newVal){
+                //     this.person = `age : ${this.age} name:${this.name}`
+                //     console.log('age');
+
+                // },
+                // //z真挺起也可以写成对象 好处：可以设置立即执行
+                // name:{
+                //     handler(newVal){
+                //         console.log('name changed');
+                        
+                //         this.person = `age : ${this.age} name: ${this.name}`
+                //     },
+                //     immediate:true
+                // }
+            }
+
+        })
+
+        // vm.$watch('name',()=>{
+        //     this.person = `age : ${this.age} name:${this.name}`
+        //     console.log('12name');
+        // },{
+        //     immediate:true
+        // })
+
+        //methods么有缓存机制，computed有缓存机制
+
+        //watch一次只能观察一个，，computed 可以一次侦听多个数据 而且
+        //相当于重新赋值  watch是对已经有的值进行观察, 
+        //watch可以执行异步  computed不行
+    </script>
+</body>
+</html>

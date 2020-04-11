@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <!-- <my-cmp ref="cmp"></my-cmp> -->
+        <!-- <div ref="dom"> i am a div</div> -->
+        
+        
+        <!-- //点击子组件执行父亲的函数  -->
+        <my-cmp @click="func"></my-cmp>
+        
+
+    </div>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+        var vm = new Vue({
+
+            // el: '#app',
+            // //如何在子组件里使用父组件的值，$parent,$children,但是不推荐 因为写起来繁琐
+            // data: {
+            //     msg: 'helloworld',
+            //     content: '这是cotent'
+            // },
+            // mounted() {
+            //     //
+            //     console.log(this.$children[0].cmpFunc())
+            // },
+            // components: {
+            //   myCmp:{
+            //       data(){
+            //         return{
+            //             msg:'hello world'
+            //         }
+            //       },
+            //       template:`<div>i am a cmp </div>`,
+            //       methods: {
+            //           cmpFunc(){
+            //               console.log('cmp');
+            //           }
+            //       },
+            //   }
+            // }
+
+            //推荐引用 可以放在dom上 也可以放在组件上, this.$refs
+            //不能给多个设置一个refs 后面的会覆盖前面的, 但是for循环可以设置
+            //  el: '#app',
+            //  data: {
+            //     msg: 'helloworld',
+            //     content: '这是cotent'
+            // },
+            // mounted() {
+            //     //拿dom
+            //     console.log(this.$refs.dom);
+            //     //拿组件实例
+            //     console.log(this.$refs.cmp.msg);
+            //     console.log(this.$refs.cmp.cmpFunc());
+            // },
+            // components: {
+            //     myCmp:{
+            //       data(){
+            //         return{
+            //             msg:'hello world'
+            //         }
+            //       },
+            //       template:`<div>i am a cmp </div>`,
+            //       methods: {
+            //         cmpFunc(){
+                      
+            //         }
+            //       },
+            //   },
+            
+            
+            //通过函数传递 子向父， $listeners可以把所有通过v-on绑定的事件放到里面
+            el: '#app',
+             data: {
+                msg: 'helloworld',
+                content: '这是cotent'
+            },
+            methods: {
+                func(data){
+                    console.log(data);
+                }
+            },
+            components: {
+              myCmp:{
+                  data(){
+                    return{
+                        msg:'hello world'
+                    }
+                  },
+                  template:`<div>i am a cmp 
+                    <button @click="handleClick">点我</button>
+                    </div>`,
+                  methods: {
+                    cmpFunc(){
+                      console.log('cmp');
+                      //如果父组件函数在子组件执行。
+                      func('我在执行父组件函数');
+                    },
+                    handleClick(){
+                        //这里通过$listener拿到了父组件的func（） 并且把子的属性传递给了父组件
+                        // console.log(this.$listeners.click(this.msg));
+
+                        //$emit让组件主动触发click事件,还能传参
+                        this.$emit('click',this.msg)
+
+                        //$listneers v-on='$listeners', 触发多个组件上的事件
+                    }
+                  },
+              }
+            }
+        })
+
+
+    </script>
+</body>
+
+</html>

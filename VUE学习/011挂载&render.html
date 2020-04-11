@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        
+
+        <div id="app">
+            {{ msg }}
+        
+        </div>
+    
+       
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+            //vue el的解析流程
+            // 首先看你有没有 el, 然后去找到这个元素 ==> div#app, 然后去拿到这个元素的outerHTML(<div id="app"> {{ msg }}</d
+                //iv>作为模版) ==> AST({}) ===> 用render函数生成 - vnode (虚拟dom）-->将虚拟dom变成真实的dom元素 -》用真实dom替换掉原先的dom
+
+            //如果el没有，看有没有 $mount, 也没有的话就啥都不干了
+
+            //真正的流程：首先看有没有el 然后看有没有template，如果有就直接用 走AST 的render流程
+            //如果template没有才回去拿 el 的outerHTML走接下来的流程
+
+
+          
+
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    money:10000
+                },
+                template:'<h2>{{ msg }}</h2>',
+                msg:'hi',
+                
+                //🌟 如果有render template就不生效了
+                //render函数里面的参数是一个函数
+                render(createElement) {
+                    return createElement('h1',{
+                        class:'haha',
+                        style:{
+                            color:'red'
+                        },
+                    },'i am h1 title');
+                },
+
+                // 这样写也行， jsx的语法 对象要用{}
+                // render(h){
+                //     return (
+                //         <h1 class='haha' style={{color:'red'}}>
+                //             <p>12</p>
+                //         </h1>
+                //     )
+                // }
+            })
+    
+        </script>
+</body>
+</html>

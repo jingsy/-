@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+
+    <div id="app">
+        <!-- <button @click="handleClick">click</button> -->
+        <my-content a="1" b="2" :title="title" :content="content">
+        </my-content>
+    </div>
+
+    <!-- 定义组件和使用组件 -->
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        
+
+
+        var vm = new Vue({
+            el: '#app',
+            //过一遍流程
+            data: {
+                content:'这是内容啊啊ppp',
+                title:'这是标题啊啊'
+            },
+            // 定义局部组件
+            components: {
+                myContent:{
+                    template:`<div><h3>{{ title }} </h3>
+                    </div>`,
+                    created() {
+                        console.log(this.$parent)
+                        this.title = this.$parent.title;
+                    },
+                    components:{
+                        myP:{
+                            props:['content'],
+                            template:'<div>{{ content }}</div>'
+                        }
+                    }
+                }
+            }
+        })
+
+        // 组建通信 父向子传递
+        //直接 注册属性
+
+        //1. vm.$attrs 绑在组件的template上   v-bind="attrs" 直接一下绑定所有没有注册的属性
+        // 包含一个未注册的属性   v-bind = "$attrs" 可以直接讲attrs里包含的所有属性直接传值
+        //但是有一个问题 没有注册的属性会显示在行间
+        //这时 我们可以设置一个属性，inheritAttrs: false 没有注册的就不会显示在行间
+
+        //2. $parent   不建议使用 有可能一直 点 点 点
+        //直接拿到父亲组件的属性 
+        //在生命周期函数中设置 
+        // created() {
+        //     this.属性= this.$parent.属性
+        // }, 
+
+
+        //3. 也不建议使用 因为不知道值从哪来
+        //provide:{ }, 和inject 父组件设置provide, 子孙组件里写inject['属性']
+
+
+
+        // 组建通信 子向父传递
+        // $children 拿到子组件实例 不推荐同$parent  $children[0].msg
+
+        //饮用 可以仿dom 是 或者cmp（组件）上
+        //this.refs拿到这个引用  <div ref="dom"> hi </div>
+        //this.$refs.dom -- > div
+        // 你不能给多个dom设置引用 前面的会被后面覆盖 but 你通过v-for设置的引用 会返回一个数组
+        //也可以放在组件上，会返回组件实例， this.$refs.cmp.msg 我们就可以干事了 调用属性或者方法
+
+        //用函数的方式传递 子组件调用父组件的方法，如何传递参数呢？ $parent 或者注册属性
+
+
+        // $listeners可以执行父组件的函数  $listeners.click(this.msg)
+        //$emit触发父组件点击事件 this.$emit('click',this.msg)
+        //不但可以监听系统的事件，两个东西也可以监听或者触发自定义事件
+        //v-on = "$listeners" 可以直接讲$listeners里包含的所有绑定的事件直接触发
+        
+        //@click.native 可以像原生那样监听事件 因为你创建的组件没有原生的这些监听事件
+
+
+        //组件通信 兄弟组件之间的传递数据
+        //event bus 事件总线
+        // vue 实例 
+        //Vue.prototype.bus = new Vue();
+        // const vm = new Vue({})
+        //在bus上设置一个事件 然后在bus上触发事件就能做到传值的操作
+
+        //双向数据通信 v-model
+        //:value + @input = v-model
+        //.sync = :value +@updata:value
+
+        
+    </script>
+</body>
+
+</html>

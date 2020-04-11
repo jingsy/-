@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <my-cmp @click="func" @like="like"></my-cmp>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        // $refs
+
+        // var vm = new Vue({
+        //     el:'#app',
+        //     mounted() {
+        //         console.log(this.$refs.cmp.func())
+        //         console.log(this.$refs.cmp.msg)
+        //     },
+        //     components:{
+        //         myCmp:{
+        //             template:`<div> i am cmp</div>`,
+        //             data() {
+        //                 return {
+        //                     msg:'hi cmp'
+        //                 }
+        //             },
+        //             methods: {
+        //                 func(){
+        //                     console.log('this is func')
+        //                 }
+        //             },
+        //         }
+        //     }
+
+        // })
+
+        //$lisetener
+
+        var vm = new Vue({
+            el: '#app',
+            methods: {
+                func(data) {
+                    console.log(data);
+                },
+                like(data) {
+                    console.log('like' + data);
+                }
+            },
+            components: {
+                myCmp: {
+                    template: `<div > i am cmp
+                    <button @click="handleClick"> btn</button>
+                    </div>                   
+                    `,
+                    data() {
+                        return {
+                            msg: '我是组件的数据msg'
+                        }
+                    },
+                    methods: {
+                        func() {
+                            console.log('this is func')
+                        },
+                        handleClick() {
+                            // console.log(this.$listeners);
+                            // this.$listeners.click(this.msg)
+                            this.$emit('like', 'ikun')
+                        }
+                    },
+                }
+            }
+
+        })
+
+        //子向父传值
+        //1.通过$children的方式 拿到子组件的值
+        //2.通过$ref的方式，可以给子组件添加引用 拿到子组件的值
+        //3.通过$listener的方式 用函数进行传值，先给组件的模版上面绑定监听事件，然后页面组件上绑定事件 如<my-p @like="like></my-p>
+        //然后在这个监听时间里
+        //用$listener取得所有组件标签上所绑定 的v-on事件， 或者用$emit触发事件，
+    </script>
+</body>
+
+</html>

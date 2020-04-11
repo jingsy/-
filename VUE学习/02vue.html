@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    <div id="app">
+        {{name}}
+        {{desc}}
+        {{arr}}
+        {{obj}}
+    </div>
+   
+    <!-- 总结下面我们一共讲了四个方法 $el $set $nextTick $mount 
+    并了解了vue中如何改变原始值，数组，对象 对应的去渲染视图
+    -->
+    <script>
+        /*
+        //先了解一下基础知识
+         <!-- 插值表达式  只有在data里的数据才能存在-->
+        //一些格式 
+            {{'a'}}
+            {{1}}
+            {{true}}
+            {{[1,2,3]}}
+            <!-- 里面写对象必须空格 -->
+            {{ {a:1,b:10} }}
+            {{1+1}}
+            {{'a'+'b'}}
+  
+    <!-- //三元表达式可以 -->
+        <!-- {{true?'a':'b'}} -->
+
+        错误示范
+    <!-- {{var a =10;return 10;}} -->
+    <!-- {{if(true){return 'a'}}} -->
+     
+        */
+      const vm = new Vue({
+            el:'#app',
+            data:{
+                name:'jing',
+                desc:'me',
+                arr:[1,2,3],
+                obj:{
+                    a:1,
+                    b:2,
+                }
+            }
+        })
+
+        //修改普通值 直接赋值操作
+        //我们可以用数据操作视图
+        vm.name ='wang';
+        //注意 我们绑定一个数据时候，必须要求数据是先存在 才会实现数据绑定 不然会出问题 页面不会刷新
+
+        //改数组
+        //注意 通过索引的方式改变数组 不能渲染视图
+        //注意 通过改变数组的length的方式改变数组 不能渲染视图
+        //调用 数组变异方法，可以改变数组 ⭐️
+        //push pop shift unshift sort reverse splice
+
+        //怎么改对象呢？
+        //1.手动加入所有属性 
+        // vm.obj ={a:1,b:2,c:3}  虽然能行 但是不好 可维护性差
+
+        //2.es6 ...
+        // vm.obj={...vm.obj,c:3} 也不好 性能不好
+
+        //3. VUE的实例方法 $set(改谁,改什么属性，改成什么)
+        // vm.$set(vm.obj,'a','12');
+
+        //$el⭐️
+        // $el可以直接拿到挂载的元素 vm.$el是异步的⭐️ 他不会你改一个他就重新渲染一遍页面，而是有一个队列， 。。所以先会打印才会渲染 
+        // 所以这里结果是先打印了没改变之前的数据 然后视图被新数据刷新
+        vm.name='li';
+        // console.log(vm.$el.innerText);
+
+        //那么我们如何让想看到的dom是更改数据之后的dom？
+        
+        // $nextTick 方法⭐️
+        vm.$nextTick(()=>{
+            //这里面有一个函数 是页面重新渲染后才会执行
+            console.log(vm.$el.innerText);
+        })
+
+        //$mount方法 挂载 类似$el⭐️
+        // vm.$mount('#app');
+
+    
+</script>
+</body>
+</html>

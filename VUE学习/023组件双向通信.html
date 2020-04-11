@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div>当前计数: {{ count }} </div>
+        <!-- <my-content :value="count" :obj="obj" @input="handleInput"></my-content> -->
+        <!-- <my-content :value="count" :obj="obj"></my-content> -->
+        <my-content v-model="count"></my-content>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    
+    <script>
+
+        //vue是单向数据流，子组件可以用父组件的值，但是你不能改，如果要改就用你自己的 如下面的 newObj
+
+        Vue.component('myContent',{
+            
+            props:['value','obj'],
+            data(){
+                return{
+                    // newObj : JSON.parse(JSON.stringify(this.obj))
+                }
+            },
+            template:'<div> {{ value }}<button @click="handleClick">click</button</div>',
+            methods: {
+                handleClick(){
+                    this.newObj.name='b';
+                   
+                    console.log('a');
+                    
+                }
+            },
+            mounted() {
+                setInterval(()=>{
+                        var value=this.value+1;
+                    this.$emit('input',value);
+                    },1000)
+               
+            },
+            
+            
+        })
+
+        var vm = new Vue({
+            el:'#app',
+            data(){
+                return{
+                    count:100,
+                    obj:{
+                        name:'aaa'
+                    }
+                }
+            },
+            methods:{
+                handleInput(value){
+                    this.count = value;
+                }
+            }
+        })
+    
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        
+
+        <div id="app">
+            {{ money | toMoney(2) | test }}
+       
+        
+        </div>
+    
+       
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+            //   {{value的值 | 管道符之前的值}}
+
+            // 定义全局的过滤器
+            Vue.filter('toMoney',(value,times)=>{
+                //即使传参了 第一个参数value也指的是管道符合之前的数字，即原始的数字
+                console.log(value);
+                 return (value*times).toLocaleString()
+            });
+            Vue.filter('test',(value,times)=>{
+                console.log(value); //20000 toMoney后的值
+                 return value;
+            });
+
+
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    money:10000
+                },
+            //    局部过滤器 跟全局一样一样的～
+                filters:{
+                    toMoney:(value,times)=>{
+
+                    }
+                }
+                
+            })
+    
+        </script>
+</body>
+</html>

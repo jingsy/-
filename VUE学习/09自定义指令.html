@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        
+
+        <div id="app">
+
+               <input type="text" v-slice:9.number="content" v-model="content"> 
+               {{ content }}
+        </div>
+    
+        <div id="app1">
+
+        </div>
+
+        <!-- 全局自定义指令。哪都能用，局部只能在某一块用 -->
+
+        
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+            // <!--  全局自定义指令-->
+            Vue.directive('slice',(el,bindings,vnode)=>{
+                // console.log(el); 指令所在的dom元素
+                // console.log(bindings); 绑定的一些信息
+                // console.log(vnode); 指令绑定的元素，上面有一个vue实例（context），可以拿到所在的vue实例
+                const val = bindings.value.slice(0,5);
+                vnode.context.content =val;
+                // 这里的dinding是下面的bind和update的集合
+            })
+            // 使用对象的方式
+            Vue.directive('slice',{
+                bind(el,bindings,vnode){
+                    //第一次绑定的时候执行 
+                },
+                update(el,bindings,vnode){
+                    // 设置的虚拟dom重新渲染的时候会执行，第一次不执行
+                    // 里面有 expression 就是data里的content属性
+                },
+                inserted(el){
+                    // el.focus() 聚焦 
+                }
+            })
+
+
+
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    content:''
+                },   
+                // 自定义指令
+                directives:{
+                    slice:(el,bindings,vnode)=>{
+                        
+                    }
+                }   
+            })
+            var vm1 = new Vue({
+                el: '#app1',
+                data: {
+                      
+                },      
+            })
+    
+        </script>
+</body>
+</html>

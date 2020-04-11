@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+        
+
+        <div id="app">
+            <input type="text" v-model="task" @keyup="addTask($event,'up')">
+            <button @click="addTask($event,'click')"> 提交</button>
+            <p>正在添加的任务: {{ task }}</p>
+            <h4>所有任务</h4>
+
+            <ul>
+                <li v-for="(task,index) in taskList" :key="index">
+                    {{task}}
+                    <button @click="deleteTask(index)">删除</button> 
+                </li> 
+                
+            </ul>
+        
+
+            
+        
+        </div>
+    
+        <!-- $event 事件对象 -->
+        <!-- 修饰符 -->
+
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <script>
+            var vm = new Vue({
+                el: '#app',
+                data: {
+                    task:'',
+                    taskList:[],
+                },
+                methods: {
+                    addTask(e,type){
+                        console.log(e);
+                        console.log(type);          
+                        if(type ==='up'&&e.keyCode !==13){
+                            return;
+                        }
+                            this.taskList.push(this.task);
+                            this.task='';
+                    },
+                    deleteTask(index){
+                        this.taskList.splice(index,1)
+                    }
+                },
+                
+            })
+    
+        </script>
+</body>
+</html>

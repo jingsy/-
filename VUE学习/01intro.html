@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <input type="">
+    <!-- 
+        //浏览器的渲染过程
+        // 1.解析html 构建DOM树 （从html的根节点开始遍历每一个可见节点
+        // 2.解析css 生成css规则树
+        // 3.合并dom树和css规则树，生成render树
+        // 4.布局render树 负责各元素尺寸 位置的计算 (消耗cpu)
+        // 5.绘制render树 绘制页面像素信息
+        // 6.浏览器会将各层的信息发送给GPU，GPU将各层合成
+
+
+        重排：当dom的变化影响了元素的几何属性（宽和高，大小，位置，） 浏览器想要重新计算
+        元素的几何属性 同样其他元素的几何属性和位置也会受到影响 浏览器会使渲染树中
+        受到影响的部分失效 并重新构造渲染树 
+        重绘：完成重排后，浏览器重新绘制受到影响的部分到屏幕中
+
+        //什么时候触发重排？？？
+        1.添加或删除可见的DOM
+        2.元素位置改变
+        3.元素尺寸改变
+        4.内容改变
+        5。页面渲染器初始化
+        6.浏览器窗口尺寸改变
+
+        触发重排就一定会触发重绘
+
+        -------------------------------------------
+
+
+        VUE的核心：虚拟dom 由js模拟出来的具有真实dom结构的一个树形结构
+        操作dom是昂贵的 放在js操作效率更高
+
+
+        MVVM:
+
+        M:model(数据)
+
+        V: view（视图）
+
+        VM:view model
+
+     -->
+
+     <div id="container">
+         <h1 class="title">test1<span></span></h1>
+         <p class="content">test2</p>
+     </div>
+
+     <script>
+    //  模拟div dom
+        const vDom ={
+            tag:'div',
+            attrs:{
+                id:'container'
+            },
+            children:[
+                {
+                    tag:'h1',
+                    attrs:{
+                        class:'title'
+                    },
+                    children:[
+                        "test1",
+                        {
+                            tag:'span'
+                        }
+                    ]
+                },
+                {
+                    tag:'p',
+                    attrs:{
+                        class:'content'
+                    },
+                    children:[
+                        'test2'
+                    ]
+                }
+            ]
+        }
+     
+     
+     </script>
+</body>
+</html>

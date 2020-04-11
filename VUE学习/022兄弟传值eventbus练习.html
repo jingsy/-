@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="app">
+        <my-input> </my-input>
+        <hr>
+        <my-content ></my-content>
+        
+    </div>
+
+    <!-- 定义组件和使用组件 -->
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+
+        Vue.prototype.bus = new Vue();
+
+        var vm = new Vue({
+            el: '#app',
+            components: {
+                myContent:{
+                    data() {
+                        return {
+                            content:''
+                        }
+                    },
+                    created() {
+                        this.bus.$on('click',(content)=>{
+                            console.log(content);
+                            this.content=content;
+                        })
+                    },
+                    template: `<div>
+                                {{content}}
+                            </div>`,
+                },
+                myInput: {
+                    data() {
+                        return {
+                            inputVal:''
+                        }
+                    },
+                    template: `<div>
+                                <input type="text" v-model.lazy="inputVal"/>
+                                <button @click="handleClick">提交</button>
+                            </div>`,
+                    methods: {
+                        handleClick(){
+                            // console.log(this.inputVal);
+                            this.bus.$emit('click',this.inputVal)
+                        }
+                    },
+                },
+                
+
+            }
+        })
+
+        
+        //利用发布订阅，
+
+
+        //组件通信 兄弟组件之间的传递数据
+        //event bus 事件总线
+        // vue 实例 
+        //Vue.prototype.bus = new Vue();
+        // const vm = new Vue({})
+        //在bus上设置一个事件 然后在bus上触发事件就能做到传值的操作
+        //在一个组件上触发，在另一个组件上的声明周期函数上监听，达到传值的效果
+
+        //双向数据通信 v-model
+        //:value + @input = v-model
+        //.sync = :value +@updata:value
+
+
+
+    </script>
+</body>
+
+</html>

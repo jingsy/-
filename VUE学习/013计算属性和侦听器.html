@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <!-- 计算属性 -->
+
+    <div id="app">
+    {{ person }} computed 
+    <!-- {{ person() }} method -->
+    {{ msg }}
+
+    
+    </div>
+ 
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        //  data -> methods -> computed 数据查找顺序
+        
+        var vm = new Vue({ 
+            el: '#app',
+            //过一遍流程
+            data:{
+                //data中的this 是window
+                name:'a',
+                age:19,
+                msg:'qq',
+                // person:`姓名: ${this.name} 年龄: ${this.age}`, //no this pointed to window in data
+                
+            },
+            computed: {
+                // 相当于一次缓存 只有涉及到用的属性 更改了才会重新执行这个函数 节省性能
+                // computed 就不用写成 person()了， 他会自己去执行并返回结果 你就当成data里的数据来用
+                person(){
+                    console.log('computed');
+                    
+                    return '姓名:'+ this.name +'年龄:'+ this.age;
+                }
+
+                //计算属性也能写成对象 里面有get() set()
+                // person:{
+                //     get(){
+                //         return '姓名:'+ this.name +'年龄:'+ this.age;
+                //     },
+                //     set(val){
+                //         //这个属性 不会改变值 还是原理的值 只不过会执行这个函数而已
+                //         console.log(val);
+                //     }
+                // }
+            },
+            methods: {
+                // person(){
+                //     console.log('person');
+
+                //     return '姓名:'+ this.name +'年龄:'+ this.age;
+                //     //or return '姓名: ${this.name} 年龄: ${this.age}'
+
+                //     //method进行了太多性能消耗 只要页面里的数据进行渲染 method里面的函数就会执行
+                // }
+            },
+            //computed和method会在第一次页面渲染的时候执行里面的函数，但是watch不会，他只有当他观察到有值改变 他才会执行
+            
+            //computed 计算属性不能执行异步 watch可以执行异步🌟
+            // watch: {
+            //     //监听器，监听属性的变化 不会在页面改变时执行 watch可以更改视图
+            //     name(newVal){ 
+            //         // newVal就是你被监听的属性改变后的值,this.name已经是更新后的值了 所以可以这样写
+            //         this.person =  '姓名:'+ this.name +'年龄:'+ this.age;
+            //         或者 
+            //         this.person =  '姓名:'+ newVal +'年龄:'+ this.age;
+            //     },
+            //     //监听器 也可以写成对象的形式
+            //     name:{
+            //         handler(newVal){
+            //             //这个handler函数就相当于上面的函数
+            //             this.person =  '姓名:'+ this.name +'年龄:'+ this.age;
+            //         },
+            //         //设置了这个就会 第一次进入页面就会执行侦听器里的函数了  默认是false
+            //         immediate:true,
+            //     }
+            // },
+        })
+
+        //实例上也可以用侦听器
+        //监听函数 监听name属性 第三个参数为配置
+        // vm.$watch('name',()=>{
+        //     console.log('say my name')
+        // },{
+        //     immediate:true
+        //     //immediate意思为一进来就立即执行这个函数
+        // })
+
+        // computed  watch method $watch 的区别 
+
+    </script>
+</body>
+</html>
